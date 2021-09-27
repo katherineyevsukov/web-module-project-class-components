@@ -17,6 +17,7 @@ class App extends React.Component {
     super();
     this.state = {
       toDos: intialToDos,
+      formInput: "",
     };
     // this.state = {
     //   toDos: intialToDos,
@@ -48,10 +49,30 @@ class App extends React.Component {
     });
   };
 
+  handleSubmit = (e) => {
+    e.preventDefault()
+    const newTask = {
+      task: this.state.formInput,
+      notes: "",
+      completed: false,
+      id: Date.now()
+    }
+    this.setState({...this.state, toDos: [...this.state.toDos, newTask]})
+  }
+
+  handleChange = (e) => {
+    this.setState({...this.state, formInput: e.target.value })
+  }
+
   render() {
     return (
       <div>
+        
         <h2>Welcome to your Todo App!</h2>
+        <form onSubmit={this.handleSubmit}>
+          <input type="text" value={this.state.initialInput} onChange={this.handleChange}/>
+          <button type="submit">Add Task</button>
+        </form>
         {/* {this.state.toDos.map((tsk) => (
           <div key={tsk.id}>
             <p>{tsk.task}</p>
