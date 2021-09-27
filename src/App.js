@@ -16,8 +16,8 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      toDos: intialToDos
-    }
+      toDos: intialToDos,
+    };
     // this.state = {
     //   toDos: intialToDos,
     //   notes: 0
@@ -34,16 +34,21 @@ class App extends React.Component {
   handleToggleComplete = (id) => {
     this.setState({
       ...this.state,
-      toDos: this.state.toDos.map(item => (
-        item.id === id ? {...item, completed: !item.completed} : item
-      ))
-    })
-    console.log(this.state)
-  }
+      toDos: this.state.toDos.map((item) =>
+        item.id === id ? { ...item, completed: !item.completed } : item
+      ),
+    });
+    console.log(this.state);
+  };
 
+  handleClearCompleted = () => {
+    this.setState({
+      ...this.state,
+      toDos: this.state.toDos.filter((item) => item.completed === false),
+    });
+  };
 
   render() {
-    
     return (
       <div>
         <h2>Welcome to your Todo App!</h2>
@@ -54,7 +59,13 @@ class App extends React.Component {
             {this.state.notes === tsk.id ? <p>{tsk.notes}</p> : null}
           </div>
         ))} */}
-        <TodoList toDos={this.state.toDos} handleToggleComplete={this.handleToggleComplete}/>
+        <TodoList
+          toDos={this.state.toDos}
+          handleToggleComplete={this.handleToggleComplete}
+        />
+        <button onClick={this.handleClearCompleted}>
+          Clear Completed Tasks
+        </button>
       </div>
     );
   }
